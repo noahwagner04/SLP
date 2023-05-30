@@ -5,6 +5,7 @@ import {
 	Rectangle,
 	Circle
 } from "/shapes.js"
+import { Game } from "/game.js"
 
 // this object stores various handy collision check functions between pirimitive shapes
 var Collision = {};
@@ -53,6 +54,11 @@ Collision.circleToCircle = function(circle1, circle2) {
 	return true;
 };
 
-Collision.checkInWall = function(position, worldMap) {
-	
+Collision.checkInWall = function(position) {
+	let mapPosX = Math.floor(position.x);
+	let mapPosY = Math.floor(position.y);
+
+	return Game.currentScene.worldMap.data[mapPosX + mapPosY * Game.currentScene.worldMap.width] === 0 ? false : true;
 };
+
+export { Collision };

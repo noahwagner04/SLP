@@ -1,9 +1,24 @@
-import { Pseudo3D } from "/pseudo3dmin.js"
-import { IO } from "/IO.js"
-import { scene1 } from "/scenes/scene1.js"
-import { Textures } from "/textures.js"
-import { Player } from "/player.js"
-import { Animation } from "/animation.js"
+import {
+	Pseudo3D
+} from "/pseudo3dmin.js"
+import {
+	IO
+} from "/IO.js"
+import {
+	scene1
+} from "/scenes/scene1.js"
+import {
+	Textures
+} from "/textures.js"
+import {
+	Player
+} from "/player.js"
+import {
+	Animation
+} from "/animation.js"
+import {
+	Projectile
+} from "/projectile.js"
 
 // holds all the game state related variables such as the player, enemies, npcs, the world data, etc.
 var Game = {
@@ -18,6 +33,7 @@ Game.init = function() {
 };
 
 let previousFrameTime = 0;
+let projectiles = [];
 
 // main update loop
 Game.update = function() {
@@ -33,17 +49,42 @@ Game.update = function() {
 
 	let playerSpeed = 5000 * Game.player.velocity.getMagSqr();
 
-	if(playerSpeed > 15) playerSpeed = 15;
+	if (playerSpeed > 15) playerSpeed = 15;
 
-	IO.screen.drawingContext.drawImage(Textures.rightHand.htmlImageElement, 160, 100 + 2 * Math.sin(previousFrameTime/100)*playerSpeed/5, 75, 75);
+	IO.screen.drawingContext.drawImage(Textures.rightHand.htmlImageElement, 160, 100 + 2 * Math.sin(previousFrameTime / 100) * playerSpeed / 5, 75, 75);
 
-	IO.screen.drawingContext.drawImage(Textures.leftHand.htmlImageElement, 0, 100 + 2 * Math.sin(previousFrameTime/100)*playerSpeed/5, 65, 65);
+	IO.screen.drawingContext.drawImage(Textures.leftHand.htmlImageElement, 0, 100 + 2 * Math.sin(previousFrameTime / 100) * playerSpeed / 5, 65, 65);
 
 	IO.screen.setPixels();
+
+	if (IO.keysDown["f"]) {
+		projectiles.push(new Projectile({
+			position: Game.player.orientation.position.clone(),
+			velocity: Game.player.orientation.direction.clone().scale(5),
+			movingAnimation: new Animation({
+				frameArray: [0, 1, 2, 3, 4, 5],
+				repeat: true,
+				animationTime: 6
+			}),
+			hitAnimation: new Animation({
+				frameArray: [0, 1, 2, 3, 4, 5],
+				repeat: true,
+				animationTime: 6
+			})
+		}));
+	}
+
+	for (var i = projectiles.length - 1; i >= 0; i--) {
+		projectiles[i].update(Game.deltaTime);
+		if(projectiles[i].hit == true) {
+			Game.currentScene.remove(projectiles[i].renderEntity);
+			projectiles.splice(i, 1);
+		}
+	}
 };
 
 Game.update();
-
+window.Game = Game;
 function test(a, b, c) {
 	let d = a + b + c;
 	console.log(d);
@@ -66,4 +107,6 @@ animation.addFrameEvent(5, () => {
 });
 animation.play();
 
-export { Game };
+export {
+	Game
+};
