@@ -13,6 +13,8 @@ class Animation {
 
 		this.frameEvents = {};
 
+		this.onNewFrame = typeof config.onNewFrame === "function" ? config.onNewFrame : undefined;
+
 		this.intervalId;
 
 		this.eventId = 0;
@@ -32,6 +34,8 @@ class Animation {
 			} else if (this.frameIndex < this.frameArray.length) {
 				this.frameIndex++;
 			}
+			if(this.onNewFrame) this.onNewFrame(this.frameArray[this.frameIndex]);
+
 		}.bind(this), this.frameTime * 1000);
 		return this;
 	}

@@ -54,4 +54,36 @@ Textures.tree = new Pseudo3D.Texture({
 	path: "/assets/tree.png",
 });
 
+Textures.fireBall1 = new Pseudo3D.Texture({
+	path: "/assets/fball1.png",
+});
+
+Textures.fireBall2 = new Pseudo3D.Texture({
+	path: "/assets/fball2.png",
+});
+
+Textures.fbA1 = new Pseudo3D.Texture({
+	path: "/assets/fbA1.png",
+});
+
+Textures.fbA2 = new Pseudo3D.Texture({
+	path: "/assets/fbA2.png",
+});
+
+Textures.fbA3 = new Pseudo3D.Texture({
+	path: "/assets/fbA3.png",
+});
+
+Textures.fbA4 = new Pseudo3D.Texture({
+	path: "/assets/fbA4.png",
+});
+
+Textures.fbA5 = new Pseudo3D.Texture({
+	path: "/assets/fbA5.png",
+});
+
+Textures.fbA6 = new Pseudo3D.Texture({
+	path: "/assets/fbA6.png",
+});
+
 export { Textures };

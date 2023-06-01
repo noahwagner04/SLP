@@ -7,6 +7,7 @@ let IO = {
 	keysDown: [],
 	mouseX: 0,
 	mouseY: 0,
+	mouseIsDown: false,
 };
 
 // just attach the screen to the body for now
@@ -31,6 +32,14 @@ IO.screen.htmlCanvasElement.addEventListener("mousemove", (e) => {
 	var angle = Pseudo3D.Math.remap(IO.mouseX, 0, IO.screen.width, -Math.PI / 8, Math.PI / 8);
 	Game.player.camera.setRotation(angle);
 	Game.player.camera.pitch = (IO.screen.height / 2 - IO.mouseY) * 0.5;
+});
+
+IO.screen.htmlCanvasElement.addEventListener("mousedown", (e) => {
+	IO.mouseIsDown = true;
+});
+
+IO.screen.htmlCanvasElement.addEventListener("mouseup", (e) => {
+	IO.mouseIsDown = false;
 });
 
 export { IO };

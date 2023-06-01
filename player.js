@@ -22,13 +22,15 @@ class Player {
 			focalLength: 1,
 			pitch: 0,
 			lighting: {
-				brightness: 1,
-				maxBrightness: 1,
-				color: new Pseudo3D.Color(240, 230, 200, 255),
+				brightness: 0.7,
+				maxBrightness: 1.3,
+				color: new Pseudo3D.Color(250, 230, 200, 255),
 			},
 		});
 
 		this.orientation = this.camera.orientation;
+
+		this.fireInterval = 0.25;
 
 		this.maxSpeed = 4.5;
 		this.accSpeed = 50;
